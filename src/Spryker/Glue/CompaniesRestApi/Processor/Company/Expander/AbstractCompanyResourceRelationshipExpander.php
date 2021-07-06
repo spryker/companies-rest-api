@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship;
+namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Expander;
 
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\RestCompanyAttributesTransfer;

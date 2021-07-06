@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Relationship;
+namespace Spryker\Glue\CompaniesRestApi\Processor\Company\Expander;
 
-use Generated\Shared\Transfer\CompanyRoleTransfer;
+use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-class CompanyByCompanyRoleResourceRelationshipExpander extends AbstractCompanyResourceRelationshipExpander
+class CompanyByCompanyBusinessUnitResourceRelationshipExpander extends AbstractCompanyResourceRelationshipExpander
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
@@ -21,10 +21,10 @@ class CompanyByCompanyRoleResourceRelationshipExpander extends AbstractCompanyRe
     protected function findCompanyTransferInPayload(RestResourceInterface $restResource): ?CompanyTransfer
     {
         /**
-         * @var \Generated\Shared\Transfer\CompanyRoleTransfer|null $payload
+         * @var \Generated\Shared\Transfer\CompanyBusinessUnitTransfer|null $payload
          */
         $payload = $restResource->getPayload();
-        if (!$payload || !($payload instanceof CompanyRoleTransfer)) {
+        if (!$payload || !($payload instanceof CompanyBusinessUnitTransfer)) {
             return null;
         }
 
