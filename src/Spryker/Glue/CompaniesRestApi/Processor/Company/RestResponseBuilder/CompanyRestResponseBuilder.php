@@ -22,20 +22,11 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
      */
     protected $restResourceBuilder;
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     */
     public function __construct(RestResourceBuilderInterface $restResourceBuilder)
     {
         $this->restResourceBuilder = $restResourceBuilder;
     }
 
-    /**
-     * @param string $companyUuid
-     * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createCompanyRestResponse(
         string $companyUuid,
         RestCompanyAttributesTransfer $restCompanyAttributesTransfer
@@ -44,12 +35,6 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
             ->addResource($this->createCompanyRestResource($companyUuid, $restCompanyAttributesTransfer));
     }
 
-    /**
-     * @param string $companyUuid
-     * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
     public function createCompanyRestResource(
         string $companyUuid,
         RestCompanyAttributesTransfer $restCompanyAttributesTransfer
@@ -61,9 +46,6 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
         );
     }
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createCompanyNotFoundError(): RestResponseInterface
     {
         $restErrorTransfer = (new RestErrorMessageTransfer())
@@ -74,9 +56,6 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
         return $this->restResourceBuilder->createRestResponse()->addError($restErrorTransfer);
     }
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createResourceNotImplementedError(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())
@@ -88,9 +67,6 @@ class CompanyRestResponseBuilder implements CompanyRestResponseBuilderInterface
             ->addError($restErrorMessageTransfer);
     }
 
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function createCompanyUserNotSelectedError(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())

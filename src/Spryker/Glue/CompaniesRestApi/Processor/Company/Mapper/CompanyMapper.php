@@ -12,12 +12,6 @@ use Generated\Shared\Transfer\RestCompanyAttributesTransfer;
 
 class CompanyMapper implements CompanyMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     * @param \Generated\Shared\Transfer\RestCompanyAttributesTransfer $restCompanyAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestCompanyAttributesTransfer
-     */
     public function mapCompanyTransferToRestCompanyAttributesTransfer(
         CompanyTransfer $companyTransfer,
         RestCompanyAttributesTransfer $restCompanyAttributesTransfer

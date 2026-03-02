@@ -41,9 +41,6 @@ class CompanyUserCompanyCartReorderRequestExpanderPluginTest extends Unit
      */
     protected const DIFFERENT_ID_COMPANY_USER = 3;
 
-    /**
-     * @return void
-     */
     public function testExpandSetsCompanyIdWhenRestUserHasCompanyId(): void
     {
         // Arrange
@@ -61,9 +58,6 @@ class CompanyUserCompanyCartReorderRequestExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandSetsCompanyUserIdWhenCompanyUserIdIsNotSetAndRestUserHasCompanyUserId(): void
     {
         // Arrange
@@ -83,9 +77,6 @@ class CompanyUserCompanyCartReorderRequestExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandDoesNotSetCompanyUserIdWhenCompanyUserIdIsAlreadySet(): void
     {
         // Arrange
@@ -111,9 +102,6 @@ class CompanyUserCompanyCartReorderRequestExpanderPluginTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testExpandDoesNothingWhenRestUserDoesNotHaveCompanyId(): void
     {
         // Arrange
@@ -127,9 +115,6 @@ class CompanyUserCompanyCartReorderRequestExpanderPluginTest extends Unit
         $this->assertNull($updatedCartReorderRequestTransfer->getCompanyUserTransfer());
     }
 
-    /**
-     * @return void
-     */
     public function testExpandUpdatesExistingCompanyUserTransferWhenProvided(): void
     {
         // Arrange

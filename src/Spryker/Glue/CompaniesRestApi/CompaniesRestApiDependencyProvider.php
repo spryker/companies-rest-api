@@ -21,11 +21,6 @@ class CompaniesRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     public const CLIENT_COMPANY = 'CLIENT_COMPANY';
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     public function provideDependencies(Container $container): Container
     {
         $container = parent::provideDependencies($container);
@@ -34,11 +29,6 @@ class CompaniesRestApiDependencyProvider extends AbstractBundleDependencyProvide
         return $container;
     }
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     protected function addCompanyClient(Container $container): Container
     {
         $container->set(static::CLIENT_COMPANY, function (Container $container) {

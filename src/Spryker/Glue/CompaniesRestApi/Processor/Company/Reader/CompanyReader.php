@@ -33,11 +33,6 @@ class CompanyReader implements CompanyReaderInterface
      */
     protected $companyRestResponseBuilder;
 
-    /**
-     * @param \Spryker\Glue\CompaniesRestApi\Dependency\Client\CompaniesRestApiToCompanyClientInterface $companyClient
-     * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface $companyMapperInterface
-     * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder\CompanyRestResponseBuilderInterface $companyRestResponseBuilder
-     */
     public function __construct(
         CompaniesRestApiToCompanyClientInterface $companyClient,
         CompanyMapperInterface $companyMapperInterface,
@@ -48,11 +43,6 @@ class CompanyReader implements CompanyReaderInterface
         $this->companyRestResponseBuilder = $companyRestResponseBuilder;
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     public function getCurrentUserCompany(RestRequestInterface $restRequest): RestResponseInterface
     {
         if ($this->isResourceIdentifierCurrentUser($restRequest->getResource()->getId())) {
@@ -62,11 +52,6 @@ class CompanyReader implements CompanyReaderInterface
         return $this->getCurrentUserCompanyByUuid($restRequest);
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     protected function getCurrentUserCompanies(RestRequestInterface $restRequest): RestResponseInterface
     {
         if (!$restRequest->getRestUser()->getIdCompany()) {
@@ -84,11 +69,6 @@ class CompanyReader implements CompanyReaderInterface
         return $this->createResponse($companyTransfer);
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     protected function getCurrentUserCompanyByUuid(RestRequestInterface $restRequest): RestResponseInterface
     {
         $companyResponseTransfer = $this->companyClient->findCompanyByUuid(
@@ -105,21 +85,11 @@ class CompanyReader implements CompanyReaderInterface
         return $this->createResponse($companyResponseTransfer->getCompanyTransfer());
     }
 
-    /**
-     * @param string $resourceIdentifier
-     *
-     * @return bool
-     */
     protected function isResourceIdentifierCurrentUser(string $resourceIdentifier): bool
     {
         return $resourceIdentifier === CompaniesRestApiConfig::COLLECTION_IDENTIFIER_CURRENT_USER;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
     protected function createResponse(CompanyTransfer $companyTransfer): RestResponseInterface
     {
         $restCompanyAttributesTransfer = $this->companyMapperInterface
@@ -135,12 +105,6 @@ class CompanyReader implements CompanyReaderInterface
             );
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return bool
-     */
     protected function isCurrentCompanyUserInCompany(
         RestRequestInterface $restRequest,
         CompanyTransfer $companyTransfer

@@ -13,11 +13,6 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
 class CompanyByCompanyRoleResourceRelationshipExpander extends AbstractCompanyResourceRelationshipExpander
 {
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
-     *
-     * @return \Generated\Shared\Transfer\CompanyTransfer|null
-     */
     protected function findCompanyTransferInPayload(RestResourceInterface $restResource): ?CompanyTransfer
     {
         /**

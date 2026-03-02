@@ -26,10 +26,6 @@ abstract class AbstractCompanyResourceRelationshipExpander implements CompanyRes
      */
     protected $companyMapper;
 
-    /**
-     * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\RestResponseBuilder\CompanyRestResponseBuilderInterface $companyRestResponseBuilder
-     * @param \Spryker\Glue\CompaniesRestApi\Processor\Company\Mapper\CompanyMapperInterface $companyMapper
-     */
     public function __construct(
         CompanyRestResponseBuilderInterface $companyRestResponseBuilder,
         CompanyMapperInterface $companyMapper
@@ -60,18 +56,8 @@ abstract class AbstractCompanyResourceRelationshipExpander implements CompanyRes
         return $resources;
     }
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
-     *
-     * @return \Generated\Shared\Transfer\CompanyTransfer|null
-     */
     abstract protected function findCompanyTransferInPayload(RestResourceInterface $restResource): ?CompanyTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\CompanyTransfer $companyTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
     protected function createCompanyRestResourceFromCompanyTransfer(CompanyTransfer $companyTransfer): RestResourceInterface
     {
         $restCompanyAttributesTransfer = $this->companyMapper
