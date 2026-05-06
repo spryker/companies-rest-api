@@ -1,0 +1,76 @@
+resource:
+    name: Companies
+    shortName: companies
+    description: 'Company information for authenticated company users'
+
+    provider: Spryker\Glue\CompaniesRestApi\Api\Storefront\Provider\CompaniesStorefrontProvider
+
+    paginationEnabled: false
+
+    security: "is_granted('ROLE_CUSTOMER')"
+
+    operations:
+        # BC: legacy `GET /companies/mine` returned a JSON:API collection envelope
+        # `{data: [{...}]}` (one element), so this stays as `GetCollection` even though
+        # it semantically returns a single company.
+        # Declared BEFORE `/companies/{uuid}` so the literal route wins over the
+        # parameterised one when matching `/companies/mine`.
+        - type: GetCollection
+          name: getCompaniesMine
+          uriTemplate: '/companies/mine'
+          description: 'Retrieve the company of the currently authenticated company user.'
+
+        # BC: legacy `GET /companies/{uuid}` returned a single-item envelope
+        # `{data: {...}}`, so this is `Get` (not `GetCollection`).
+        - type: Get
+          name: getCompanyByUuid
+          uriTemplate: '/companies/{uuid}'
+          description: 'Retrieve a specific company by UUID. The company must belong to the authenticated company user.'
+
+        # BC: legacy `GET /companies` (no id) returned 501 Not Implemented.
+        - type: GetCollection
+          name: getCompaniesFallback
+          uriTemplate: '/companies'
+          description: 'Returns 501 (endpoint not implemented).'
+
+    properties:
+        # BC: `uuid` is the JSON:API resource id (`data.id`), NOT an attribute.
+        # `identifier: true` populates `data.id`; `readable: false` keeps it out of
+        # the `attributes` block, matching the legacy response shape.
+        uuid:
+            type: string
+            identifier: true
+            writable: false
+            readable: false
+            required: false
+            description: 'Unique company identifier'
+            openapiContext:
+                example: '59b660c3-a2d4-5def-98e7-95a0ab34f20c'
+
+        name:
+            type: string
+            writable: false
+            readable: true
+            required: false
+            description: 'Company name'
+            openapiContext:
+                example: 'Spryker Systems GmbH'
+
+        isActive:
+            type: boolean
+            writable: false
+            readable: true
+            required: false
+            description: 'Whether the company is active'
+            openapiContext:
+                example: true
+
+        status:
+            type: string
+            writable: false
+            readable: true
+            required: false
+            description: 'Company status'
+            openapiContext:
+                example: 'approved'
+                enum: ['pending', 'approved', 'denied']
