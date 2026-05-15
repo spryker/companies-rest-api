@@ -7,7 +7,7 @@ resource:
 
     paginationEnabled: false
 
-    security: "is_granted('ROLE_CUSTOMER')"
+    security: "is_granted('ROLE_CUSTOMER') or is_granted('ROLE_COMPANY_USER')"
 
     operations:
         # BC: legacy `GET /companies/mine` returned a JSON:API collection envelope

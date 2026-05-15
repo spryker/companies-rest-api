@@ -16,4 +16,11 @@ interface CompanyReaderInterface
     public function findCompanyByUuid(string $uuid): ?CompanyTransfer;
 
     public function findCompanyByIdCompany(int $idCompany): ?CompanyTransfer;
+
+    /**
+     * @param array<int> $idCompanies
+     *
+     * @return array<int, \Generated\Shared\Transfer\CompanyTransfer>
+     */
+    public function getCompaniesIndexedByCompanyId(array $idCompanies): array;
 }

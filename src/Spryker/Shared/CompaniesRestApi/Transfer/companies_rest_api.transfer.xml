@@ -10,6 +10,8 @@
     <transfer name="Company">
         <property name="uuid" type="string" description="A Universally Unique Identifier for an entity."/>
         <property name="idCompany" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -26,9 +28,17 @@
         <property name="company" type="Company" description="A company entity."/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
     <transfer name="CompanyResponse">
         <property name="companyTransfer" type="Company" description="A data transfer object for a company."/>
         <property name="isSuccessful" type="bool" description="A boolean flag indicating if an operation completed successfully."/>
+    </transfer>
+
+    <transfer name="CompanyCollection">
+        <property name="companies" type="Company[]" singular="company"/>
     </transfer>
 
     <transfer name="RestUser">
@@ -48,5 +58,9 @@
 
     <transfer name="CartReorderRequest" strict="true">
         <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="CompanyCriteriaFilter">
+        <property name="companyIds" type="int[]" singular="companyId"/>
     </transfer>
 </transfers>

@@ -13,6 +13,7 @@ use Generated\Api\Storefront\CompaniesStorefrontResource;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Spryker\ApiPlatform\Exception\GlueApiException;
 use Spryker\ApiPlatform\State\Provider\AbstractStorefrontProvider;
+use Spryker\Glue\CompaniesRestApi\Api\Storefront\Mapper\CompanyResourceMapperInterface;
 use Spryker\Glue\CompaniesRestApi\Api\Storefront\Reader\CompanyReaderInterface;
 use Spryker\Glue\CompaniesRestApi\CompaniesRestApiConfig;
 use Spryker\Service\Serializer\SerializerServiceInterface;
@@ -34,6 +35,7 @@ class CompaniesStorefrontProvider extends AbstractStorefrontProvider
 
     public function __construct(
         protected CompanyReaderInterface $companyReader,
+        protected CompanyResourceMapperInterface $companyResourceMapper,
         protected SerializerServiceInterface $serializer,
     ) {
     }
@@ -58,19 +60,19 @@ class CompaniesStorefrontProvider extends AbstractStorefrontProvider
      */
     protected function provideCollection(): array
     {
-        if ($this->getOperation()->getName() === static::OPERATION_NAME_GET_COMPANIES_MINE) {
-            if (!$this->hasCustomer()) {
-                throw new AccessDeniedException();
-            }
-
-            return [$this->provideCurrentUserCompany()];
+        if ($this->getOperation()->getName() !== static::OPERATION_NAME_GET_COMPANIES_MINE) {
+            throw new GlueApiException(
+                Response::HTTP_NOT_IMPLEMENTED,
+                static::RESPONSE_CODE_RESOURCE_NOT_IMPLEMENTED,
+                CompaniesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED,
+            );
         }
 
-        throw new GlueApiException(
-            Response::HTTP_NOT_IMPLEMENTED,
-            static::RESPONSE_CODE_RESOURCE_NOT_IMPLEMENTED,
-            CompaniesRestApiConfig::RESPONSE_DETAIL_RESOURCE_NOT_IMPLEMENTED,
-        );
+        if (!$this->hasCustomer()) {
+            throw new AccessDeniedException();
+        }
+
+        return [$this->provideCurrentUserCompany()];
     }
 
     protected function provideCurrentUserCompany(): CompaniesStorefrontResource
@@ -128,23 +130,10 @@ class CompaniesStorefrontProvider extends AbstractStorefrontProvider
         return $this->getCustomer()->getCompanyUserTransfer()?->getFkCompany();
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    protected function mapCompanyTransferToResourceData(CompanyTransfer $companyTransfer): array
-    {
-        return [
-            'uuid' => $companyTransfer->getUuid(),
-            'name' => $companyTransfer->getName(),
-            'isActive' => $companyTransfer->getIsActive(),
-            'status' => $companyTransfer->getStatus(),
-        ];
-    }
-
     protected function denormalizeToResource(CompanyTransfer $companyTransfer): CompaniesStorefrontResource
     {
         return $this->serializer->denormalize(
-            $this->mapCompanyTransferToResourceData($companyTransfer),
+            $this->companyResourceMapper->mapCompanyTransferToResourceData($companyTransfer),
             CompaniesStorefrontResource::class,
         );
     }
